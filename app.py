@@ -9,10 +9,9 @@ import os
 
 app = Flask(__name__)
 app.debug = True
-app.secret_key = 'ohyeahletsgo123'
+app.secret_key = 'secret'
 #will change because its locally hosted :o
-db_password = str(os.environ.get('DB_PASSWORD') or " ")
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://:'+db_password+'@localhost:5432/B501596j'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://Rhonda:'+'@localhost:5000/B501596j'
 db = SQLAlchemy(app)
 
 #----------------------------------------------------------------------------#
@@ -67,18 +66,18 @@ class VegetablHolder(db.Model):
     price = db.Column(db.Integer, nullable=False)
 
 
+@app.route('/dbhome/')
 
 
 
-
-@app.route('/meats/')
+@app.route('/dbhome/meats/')
 def meats():
     data= Meats.query.with_entities(Meats.name, Meats.upc).all()
     return render_template('pages/meats.html', meats=data)
 
 
 
-@app.route('/meats/search', methods=['POST'])
+@app.route('/dbhome/meats/search', methods=['POST'])
 def search_meats():
     results = Meats.query.filter(Meats.name('%{}%'.format(request.form['search_term']))).all()
 
@@ -98,7 +97,7 @@ def search_meats():
 
 
 
-@app.route('/meats/delete', methods=['POST'])
+@app.route('/dbhome/meats/delete', methods=['POST'])
 def delete_meats():
     meats_upc = request.form.get('meats_upc')
     deleted_meats = Meats.query.get(meats_upc)
@@ -114,7 +113,7 @@ def delete_meats():
         db.session.close()
 
 
-@app.route('/meats/edit', methods=['GET'])
+@app.route('/dbhome/meats/edit', methods=['GET'])
 def edit_meats():
     form = MeatsForm()
     meats_upc = request.args.get('meats_upc')
@@ -132,14 +131,14 @@ def edit_meats():
 
 
 
-@app.route('/fruits/')
+@app.route('/dbhome/fruits/')
 def fruits():
     data= Fruits.query.with_entities(Fruits.name, Fruits.upc).all()
     return render_template('pages/fruits.html', fruits=data)
 
 
 
-@app.route('/fruits/search', methods=['POST'])
+@app.route('/dbhome/fruits/search', methods=['POST'])
 def search_fruits():
     results = Fruits.query.filter(Fruits.name('%{}%'.format(request.form['search_term']))).all()
 
@@ -159,7 +158,7 @@ def search_fruits():
 
 
 
-@app.route('/fruits/delete', methods=['POST'])
+@app.route('/dbhome/fruits/delete', methods=['POST'])
 def delete_fruits():
     fruits_upc = request.form.get('fruits_upc')
     deleted_fruits = Fruits.query.get(fruits_upc)
@@ -175,7 +174,7 @@ def delete_fruits():
         db.session.close()
 
 
-@app.route('/fruits/edit', methods=['GET'])
+@app.route('/dbhome/fruits/edit', methods=['GET'])
 def edit_fruits():
     form = FruitsForm()
     fruits_upc = request.args.get('fruits_upc')
@@ -195,14 +194,14 @@ def edit_fruits():
 
 
 
-@app.route('/vegetables/')
+@app.route('/dbhome/vegetables/')
 def vegetables():
     data= Vegetables.query.with_entities(Vegetables.name, Vegetables.upc).all()
     return render_template('pages/vegetables.html', vegetables=data)
 
 
 
-@app.route('/vegetables/search', methods=['POST'])
+@app.route('/dbhome/vegetables/search', methods=['POST'])
 def search_vegetables():
     results = Vegetables.query.filter(Vegetables.name('%{}%'.format(request.form['search_term']))).all()
 
@@ -222,7 +221,7 @@ def search_vegetables():
 
 
 
-@app.route('/vegetables/delete', methods=['POST'])
+@app.route('/dbhome/vegetables/delete', methods=['POST'])
 def delete_vegetables():
     vegetables_upc = request.form.get('vegetables_upc')
     deleted_vegetables = Vegetables.query.get(vegetables_upc)
@@ -238,7 +237,7 @@ def delete_vegetables():
         db.session.close()
 
 
-@app.route('/vegetables/edit', methods=['GET'])
+@app.route('/dbhome/vegetables/edit', methods=['GET'])
 def edit_vegetables():
     form = FruitsForm()
     vegetables_upc = request.args.get('vegetables_upc')
@@ -256,14 +255,14 @@ def edit_vegetables():
 
 
 
-@app.route('/fruitholder/')
+@app.route('/dbhome/fruitholder/')
 def fruitholder():
     data= FruitHolder.query.with_entities(FruitHolder.storeId, FruitHolder.upc).all()
     return render_template('pages/fruitholder.html', fruitholder=data)
 
 
 
-@app.route('/fruitholder/search', methods=['POST'])
+@app.route('/dbhome/fruitholder/search', methods=['POST'])
 def search_fruitholder():
     results = FruitHolder.query.filter(FruitHolder.id('%{}%'.format(request.form['search_term']))).all()
 
@@ -283,7 +282,7 @@ def search_fruitholder():
 
 
 
-@app.route('/fruitholder/delete', methods=['POST'])
+@app.route('/dbhome/fruitholder/delete', methods=['POST'])
 def delete_fruitholder():
     fruitholder_upc = request.form.get('fruitholder_upc')
     deleted_fruitholder = FruitHolder.query.get(fruitholder_upc)
@@ -299,7 +298,7 @@ def delete_fruitholder():
         db.session.close()
 
 
-@app.route('/fruitholder/edit', methods=['GET'])
+@app.route('/dbhome/fruitholder/edit', methods=['GET'])
 def edit_fruitholder():
     form = FruitHolderForm()
     fruitholder_upc = request.args.get('fruitholder_upc')
@@ -319,14 +318,14 @@ def edit_fruitholder():
 
 
 
-@app.route('/vegetableholder/')
+@app.route('/dbhome/vegetableholder/')
 def vegetableholder():
     data= VegetableHolder.query.with_entities(VegetableHolder.storeId, VegetableHolder.upc).all()
-    return render_template('pages/vegetableholder.html', vegetableholder=data)
+    return render_template('dbhome/vegetableholder.html', vegetableholder=data)
 
 
 
-@app.route('/vegetableholder/search', methods=['POST'])
+@app.route('/dbhome/vegetableholder/search', methods=['POST'])
 def search_vegetableholder():
     results = VegetableHolder.query.filter(VegetableHolder.id('%{}%'.format(request.form['search_term']))).all()
 
@@ -339,11 +338,11 @@ def search_vegetableholder():
         "upc": vegetableholder.upc,
         "name": vegetableholder.name,
     })
-    return render_template('pages/search_vegetableholder.html', results=response, search_term=request.form.get('search_term', ''))
+    return render_template('dbhome/search_vegetableholder.html', results=response, search_term=request.form.get('search_term', ''))
 
 
 
-@app.route('/vegetableholder/delete', methods=['POST'])
+@app.route('/dbhome/vegetableholder/delete', methods=['POST'])
 def delete_vegetableholder():
     vegetableholder_upc = request.form.get('vegetableholder_upc')
     deleted_vegetableholder = VegetableHolder.query.get(vegetableholder_upc)
@@ -359,7 +358,7 @@ def delete_vegetableholder():
         db.session.close()
 
 
-@app.route('/vegetableholder/edit', methods=['GET'])
+@app.route('/dbhome/vegetableholder/edit', methods=['GET'])
 def edit_vegetableholder():
     form = VegetableHolderForm()
     vegetableholder_upc = request.args.get('Vegetableholder_upc')
@@ -369,7 +368,7 @@ def edit_vegetableholder():
         "storeId": vegetableholder.storeId,
         "price": vegetableholder.price
     }
-    return render_template('forms/edit_vegetableholder.html', form=form, vegetableholder=vegetableholder_info)
+    return render_template('dbhome/forms/edit_vegetableholder.html', form=form, vegetableholder=vegetableholder_info)
     # TODO: populate form with fields from artist with ID <artist_id>
 
 
@@ -383,14 +382,14 @@ def edit_vegetableholder():
 
 
 
-@app.route('/meatholder/')
+@app.route('/dbhome/meatholder/')
 def meatholder():
     data= MeatHolder.query.with_entities(MeatHolder.storeId, MeatHolder.upc).all()
     return render_template('pages/meatholder.html', meatholder=data)
 
 
 
-@app.route('/meatholder/search', methods=['POST'])
+@app.route('/dbhome/meatholder/search', methods=['POST'])
 def search_meatholder():
     results = MeatHolder.query.filter(MeatHolder.id('%{}%'.format(request.form['search_term']))).all()
 
@@ -403,14 +402,14 @@ def search_meatholder():
         "upc": meatholder.upc,
         "name": meatholder.name,
     })
-    return render_template('pages/search_meatholder.html', results=response, search_term=request.form.get('search_term', ''))
+    return render_template('dbhome/search_meatholder.html', results=response, search_term=request.form.get('search_term', ''))
 
 
 
 
 
 
-@app.route('/meatholder/delete', methods=['POST'])
+@app.route('/dbhome/meatholder/delete', methods=['POST'])
 def delete_meatholder():
     meatholder_upc = request.form.get('meatholder_upc')
     deleted_meatholder = MeatHolder.query.get(meatholder_upc)
@@ -426,7 +425,7 @@ def delete_meatholder():
         db.session.close()
 
 
-@app.route('/meatholder/edit', methods=['GET'])
+@app.route('/dbhome/meatholder/edit', methods=['GET'])
 def edit_meatholder():
     form = MeatHolderForm()
     meatholder_upc = request.args.get('meatholder_upc')
@@ -436,7 +435,7 @@ def edit_meatholder():
         "storeId": meatholder.storeId,
         "price": meatholder.price
     }
-    return render_template('forms/edit_meatholder.html', form=form, meatholder=meatholder_info)
+    return render_template('dbhome/edit_meatholder.html', form=form, meatholder=meatholder_info)
     # TODO: populate form with fields from artist with ID <artist_id>
 
 
@@ -446,14 +445,14 @@ def edit_meatholder():
 
 
 
-@app.route('/store/')
+@app.route('/dbhome/store/')
 def store():
     data= Store.query.with_entities(Store.storeId).all()
-    return render_template('pages/holder.html', store=data)
+    return render_template('dbhome/holder.html', store=data)
 
 
 
-@app.route('/store/search', methods=['POST'])
+@app.route('/dbhome/store/search', methods=['POST'])
 def search_store():
     results = Store.query.filter(Store.storeId('%{}%'.format(request.form['search_term']))).all()
 
@@ -468,14 +467,14 @@ def search_store():
         "number": store.number,
         "address": store.address
     })
-    return render_template('pages/search_store.html', results=response, search_term=request.form.get('search_term', ''))
+    return render_template('dbhome/search_store.html', results=response, search_term=request.form.get('search_term', ''))
 
 
 
 
 
 
-@app.route('/store/delete', methods=['POST'])
+@app.route('/dbhome/store/delete', methods=['POST'])
 def delete_store():
     store_storeId = request.form.get('store_storeId')
     deleted_store = Store.query.get(store_storeId)
@@ -491,7 +490,7 @@ def delete_store():
         db.session.close()
 
 
-@app.route('/store/edit', methods=['GET'])
+@app.route('/dbhome/store/edit', methods=['GET'])
 def edit_store():
     form = StoreForm()
     Store_storeId = request.args.get('store_storeId')
@@ -502,7 +501,7 @@ def edit_store():
         "number": store.number,
         "address": store.address
     }
-    return render_template('forms/edit_store.html', form=form, store=store_info)
+    return render_template('dbhome/edit_store.html', form=form, store=store_info)
     # TODO: populate form with fields from artist with ID <artist_id>
 
 
