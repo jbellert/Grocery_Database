@@ -66,7 +66,7 @@ class VegetablHolder(db.Model):
     price = db.Column(db.Integer, nullable=False)
 
 
-@app.route('/dbhome/')
+@app.route('/dbhome/', methods=['POST'])
 
 
 
@@ -93,8 +93,10 @@ def search_meats():
     return render_template('pages/search_fruits.html', results=response, search_term=request.form.get('search_term', ''))
 
 
-
-
+@app.route('/dbhome/meats/create', methods=['GET'])
+def create_meats_form():
+  form = MeatsForm()
+  return render_template('forms/new_meat.html', form=form)
 
 
 @app.route('/dbhome/meats/delete', methods=['POST'])
@@ -154,7 +156,10 @@ def search_fruits():
     return render_template('pages/search_fruits.html', results=response, search_term=request.form.get('search_term', ''))
 
 
-
+@app.route('/dbhome/fruits/create', methods=['GET'])
+def create_fruits_form():
+  form = FruitsForm()
+  return render_template('forms/new_fruit.html', form=form)
 
 
 
@@ -217,7 +222,10 @@ def search_vegetables():
     return render_template('pages/search_vegetables.html', results=response, search_term=request.form.get('search_term', ''))
 
 
-
+@app.route('/dbhome/vegetable/create', methods=['GET'])
+def create_vegetables_form():
+  form = VegetablesForm()
+  return render_template('forms/new_vegetable.html', form=form)
 
 
 
@@ -278,7 +286,10 @@ def search_fruitholder():
     return render_template('pages/search_fruitholder.html', results=response, search_term=request.form.get('search_term', ''))
 
 
-
+@app.route('/dbhome/fruitholder/create', methods=['GET'])
+def create_fruitholder_form():
+  form = FruitholderForm()
+  return render_template('forms/new_fruitholder.html', form=form)
 
 
 
@@ -340,7 +351,10 @@ def search_vegetableholder():
     })
     return render_template('dbhome/search_vegetableholder.html', results=response, search_term=request.form.get('search_term', ''))
 
-
+@app.route('/dbhome/vegetableholder/create', methods=['GET'])
+def create_vegetableholder_form():
+  form = VegetableholderForm()
+  return render_template('forms/new_vegetableholder.html', form=form)
 
 @app.route('/dbhome/vegetableholder/delete', methods=['POST'])
 def delete_vegetableholder():
@@ -406,7 +420,10 @@ def search_meatholder():
 
 
 
-
+@app.route('/dbhome/meatholder/create', methods=['GET'])
+def create_meatholder_form():
+  form = MeatholderForm()
+  return render_template('forms/new_meatholder.html', form=form)
 
 
 @app.route('/dbhome/meatholder/delete', methods=['POST'])
@@ -470,7 +487,10 @@ def search_store():
     return render_template('dbhome/search_store.html', results=response, search_term=request.form.get('search_term', ''))
 
 
-
+@app.route('/dbhome/store/create', methods=['GET'])
+def create_store_form():
+  form = storeForm()
+  return render_template('forms/new_store.html', form=form)
 
 
 
